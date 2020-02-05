@@ -6,17 +6,22 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    Vector3 p1Start;
-    Vector3 p2Start;
     public Sprite[] partsSprites;
-    public Text partsCounter;
-    public Text winQuote;
+    public Text partsCounterUI;
+    public Text winQuoteUI;
+    public Text triesCounterUI;
+    public Text timerUI;
     public GameObject player1;
     public GameObject player2;
     public int partsCollected;
     public int partsQuantity;
+    public float triesCounter;
+    public float timer;
+
 
     GameObject[] parts;
+    Vector3 p1Start;
+    Vector3 p2Start;
 
     private void Awake()
     {
@@ -27,36 +32,38 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        /*
-        for (int i = 0; i < parts.Length - 1; i++)
+        
+        for (int i = 0; i < parts.Length; i++)
         {
-            parts[i].gameObject.GetComponent<SpriteRenderer>().sprite = partsSprites[(Random.Range(0, partsSprites.Length - 1))];
+            parts[i].gameObject.GetComponent<SpriteRenderer>().sprite = partsSprites[(Random.Range(0, partsSprites.Length))];
         }
-        */
         Cursor.lockState = CursorLockMode.Locked;
-        winQuote.enabled = false;
+        winQuoteUI.enabled = false;
         p1Start = player1.transform.position;
         p2Start = player2.transform.position;
+        triesCounter = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        partsCounter.text = "Parts to repair the ship: " + partsCollected + "/" + partsQuantity;
+        timer += Time.deltaTime;
+        partsCounterUI.text = "Parts to repair the ship: " + partsCollected + "/" + partsQuantity;
+        triesCounterUI.text = "Tries: " + triesCounter;
         if(partsCollected == partsQuantity)
         {
-            winQuote.enabled = true;
+            winQuoteUI.enabled = true;
         }
-        /*
-        if(Input.GetKeyDown("R"))
-        {
 
+        if(Input.GetKeyDown("r"))
+        {
+             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-        */
     }
 
     public void restart()
     {
+        triesCounter = triesCounter + 0.5f;
         player1.gameObject.transform.position = p1Start;
         player2.gameObject.transform.position = p2Start;
     }

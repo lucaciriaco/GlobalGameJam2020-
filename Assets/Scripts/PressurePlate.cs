@@ -32,4 +32,9 @@ public class PressurePlate : MonoBehaviour
             thingToActivate.SetActive(false);
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        
+    }
 }

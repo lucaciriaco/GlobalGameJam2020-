@@ -66,6 +66,4 @@ public class CameraFollows : MonoBehaviour
         }
         return bounds.center;
     }
-
-
 }

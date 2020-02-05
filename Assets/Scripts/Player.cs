@@ -46,7 +46,6 @@ public class Player : MonoBehaviour
             }
             hasPart = false;
             gameManager.restart();
-            Debug.Log("asdf");
         }
     }
 
