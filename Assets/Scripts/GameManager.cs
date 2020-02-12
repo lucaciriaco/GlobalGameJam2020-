@@ -19,28 +19,28 @@ public class GameManager : MonoBehaviour
     public float timer;
 
 
-    GameObject[] parts;
-    Vector3 p1Start;
-    Vector3 p2Start;
+    GameObject[] _parts;
+    Vector3 _p1Start;
+    Vector3 _p2Start;
 
     private void Awake()
     {
-        parts = GameObject.FindGameObjectsWithTag("Part");
-        partsQuantity = parts.Length;
+        _parts = GameObject.FindGameObjectsWithTag("Part");
+        partsQuantity = _parts.Length;
         partsCollected = 0;
     }
 
     void Start()
     {
         
-        for (int i = 0; i < parts.Length; i++)
+        for (int i = 0; i < _parts.Length; i++)
         {
-            parts[i].gameObject.GetComponent<SpriteRenderer>().sprite = partsSprites[(Random.Range(0, partsSprites.Length))];
+            _parts[i].gameObject.GetComponent<SpriteRenderer>().sprite = partsSprites[(Random.Range(0, partsSprites.Length))];
         }
         Cursor.lockState = CursorLockMode.Locked;
         winQuoteUI.enabled = false;
-        p1Start = player1.transform.position;
-        p2Start = player2.transform.position;
+        _p1Start = player1.transform.position;
+        _p2Start = player2.transform.position;
         triesCounter = 0;
     }
 
@@ -61,10 +61,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void restart()
+    public void Restart()
     {
-        triesCounter = triesCounter + 0.5f;
-        player1.gameObject.transform.position = p1Start;
-        player2.gameObject.transform.position = p2Start;
+        triesCounter = triesCounter + 1f;
+        player1.gameObject.transform.position = _p1Start;
+        player2.gameObject.transform.position = _p2Start;
     }
 }

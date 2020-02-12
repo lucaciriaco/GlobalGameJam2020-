@@ -12,12 +12,12 @@ public class CameraFollows : MonoBehaviour
     public float maxZoom = 10f;
     public float zoomLimiter = 50f;
 
-    private Vector3 velocity;
-    private Camera cam;
+    private Vector3 _velocity;
+    private Camera _cam;
 
     private void Start()
     {
-        cam = GetComponent<Camera>();
+        _cam = GetComponent<Camera>();
     }
 
     private void LateUpdate()
@@ -33,7 +33,7 @@ public class CameraFollows : MonoBehaviour
     void Zoom()
     {
         float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / zoomLimiter);
-        cam.orthographicSize = newZoom;//Mathf.Lerp(cam.fieldOfView,newZoom,Time.deltaTime);
+        _cam.orthographicSize = newZoom;//Mathf.Lerp(cam.fieldOfView,newZoom,Time.deltaTime);
     }
 
     private float GetGreatestDistance()
@@ -50,7 +50,7 @@ public class CameraFollows : MonoBehaviour
     {
         Vector3 centerPoint = GetcenterPoint();
         Vector3 newPosition = centerPoint + offset;
-        transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, smoothTime);
+        transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref _velocity, smoothTime);
     }
 
     Vector3 GetcenterPoint()

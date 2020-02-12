@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Switch : MonoBehaviour
 {
-    SpriteRenderer sprite;
     public GameObject[] thingToActivate;
+
+    SpriteRenderer _sprite;
 
     void Start()
     {
-        sprite = GetComponent<SpriteRenderer>();
-        sprite.enabled = true;
+        _sprite = GetComponent<SpriteRenderer>();
+        _sprite.enabled = true;
         for(int i = 0;i<thingToActivate.Length-1;i++)
         {
             thingToActivate[i].SetActive(false);
@@ -25,7 +26,7 @@ public class Switch : MonoBehaviour
             {
                 thingToActivate[i].SetActive(true);
             }
-            sprite.enabled = false;
+            _sprite.enabled = false;
         }
     }
 

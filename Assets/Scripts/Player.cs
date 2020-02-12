@@ -6,12 +6,13 @@ public class Player : MonoBehaviour
 {
     public GameObject partHolder;
     public GameManager gameManager;
-    bool hasPart;
-    GameObject lastPart;
+
+    private bool _hasPart;
+    private GameObject _lastPart;
     // Start is called before the first frame update
     void Start()
     {
-        hasPart = false;
+        _hasPart = false;
     }
 
     // Update is called once per frame
@@ -22,30 +23,30 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {       
-        if ((collision.gameObject.tag == "Part") && (hasPart == false))
+        if ((collision.gameObject.tag == "Part") && (_hasPart == false))
         {
-            hasPart = true;
-            lastPart = collision.gameObject;
+            _hasPart = true;
+            _lastPart = collision.gameObject;
             collision.gameObject.SetActive(false);
         }
         if (collision.gameObject.tag == "Ship")
         {
-            if (hasPart == true)
+            if (_hasPart == true)
             {
                 gameManager.partsCollected++;
-                Destroy(lastPart);
-                hasPart = false;
+                Destroy(_lastPart);
+                _hasPart = false;
                 Debug.Log("Lo deja en la nave");
             }
         }
         if (collision.gameObject.tag == "Traps" || collision.gameObject.tag == "Proyectile")
         {
-            if(lastPart != null)
+            if(_lastPart != null)
             {
-                lastPart.gameObject.SetActive(true);
+                _lastPart.gameObject.SetActive(true);
             }
-            hasPart = false;
-            gameManager.restart();
+            _hasPart = false;
+            gameManager.Restart();
         }
     }
 
