@@ -8,18 +8,24 @@ public class MovingPlatform : MonoBehaviour
     public float speed;
     public float waitTime;
 
-    private LineRenderer line;
+    private LineRenderer _line;
 
-
+    // Start is called before the first frame update
     void Start()
     {
-        line = GetComponent<LineRenderer>();
-        Vector3[] waypoints = new Vector3[pathHolder.childCount];
-        for(int i=0;i<waypoints.Length;i++)
+        _line = GetComponent<LineRenderer>();
+        Vector3[] _waypoints = new Vector3[pathHolder.childCount];
+        for(int i=0;i<_waypoints.Length;i++)
         {
-            waypoints[i] = pathHolder.GetChild(i).position;
+            _waypoints[i] = pathHolder.GetChild(i).position;
         }
-        StartCoroutine(FollowPath(waypoints));
+        StartCoroutine(FollowPath(_waypoints));
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 
     IEnumerator FollowPath(Vector3[] waypoints)

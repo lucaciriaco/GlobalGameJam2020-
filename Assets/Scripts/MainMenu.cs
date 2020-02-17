@@ -21,6 +21,12 @@ public class MainMenu : MonoBehaviour
         btnExit.onClick.AddListener(BackToMainMenu);
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
     public void Play()
     {
         SceneManager.LoadScene(10);
