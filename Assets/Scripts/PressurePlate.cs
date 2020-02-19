@@ -6,13 +6,10 @@ public class PressurePlate : MonoBehaviour
 {
     public GameObject thingToActivate;
 
-    private LineRenderer line;
-
     // Start is called before the first frame update
     void Start()
     {
         thingToActivate.SetActive(false);
-        line = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame

@@ -12,7 +12,7 @@ public class Switch : MonoBehaviour
     {
         sprite = GetComponent<SpriteRenderer>();
         sprite.enabled = true;
-        for(int i = 0;i<thingToActivate.Length-1;i++)
+        for(int i = 0;i<thingToActivate.Length;i++)
         {
             thingToActivate[i].SetActive(false);
         }
@@ -22,19 +22,11 @@ public class Switch : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            for (int i = 0; i < thingToActivate.Length - 1; i++)
+            for (int i = 0; i < thingToActivate.Length; i++)
             {
                 thingToActivate[i].SetActive(true);
             }
             sprite.enabled = false;
-        }
-    }
-
-    private void OnDrawGizmos()
-    {
-        for(int i = 0;i<thingToActivate.Length-1; i++)
-        {
-            Gizmos.DrawLine(this.gameObject.transform.position, thingToActivate[i].transform.position);
         }
     }
 }

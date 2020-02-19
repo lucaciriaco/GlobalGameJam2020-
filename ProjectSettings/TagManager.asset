@@ -9,6 +9,7 @@ TagManager:
   - Traps
   - Moving Platform
   - Proyectile
+  - Terrain
   layers:
   - Default
   - TransparentFX

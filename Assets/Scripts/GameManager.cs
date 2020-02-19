@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text triesCounterUI;
     [SerializeField] private Text timerUI;
     [SerializeField] private Text bestScoreUI;
+    [SerializeField] private Text yourScoreUI;
     private GameObject[] parts;
     private Vector3 p1Start;
     private Vector3 p2Start;
@@ -34,7 +35,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        PlayerPrefs.GetFloat("Highscore", 10000);
         Debug.Log(PlayerPrefs.GetFloat("Highscore"));
         pauseMenu.gameObject.SetActive(false);
         winMenu.gameObject.SetActive(false);
@@ -85,7 +85,8 @@ public class GameManager : MonoBehaviour
                  PlayerPrefs.SetFloat("Highscore", timer);
             }
             winMenu.gameObject.SetActive(true);
-            bestScoreUI.text = PlayerPrefs.GetFloat("Highscore").ToString();
+            yourScoreUI.text = timer.ToString("f0");
+            bestScoreUI.text = PlayerPrefs.GetFloat("Highscore").ToString("f0");
         }
         else
         {

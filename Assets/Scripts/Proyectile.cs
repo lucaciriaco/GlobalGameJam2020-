@@ -19,6 +19,9 @@ public class Proyectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(this.gameObject);
+        if(collision.gameObject.tag == "Terrain" || collision.gameObject.tag == "Player")
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
