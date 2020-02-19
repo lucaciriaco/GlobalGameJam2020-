@@ -7,12 +7,14 @@ public class Player : MonoBehaviour
     public GameObject partHolder;
     public GameManager gameManager;
 
-    private bool _hasPart;
-    private GameObject _lastPart;
+    private bool hasPart;
+    private GameObject lastPart;
+    private GameObject partGrabed;
     // Start is called before the first frame update
     void Start()
     {
-        _hasPart = false;
+        hasPart = false;
+        SpriteRenderer sprite = GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -23,46 +25,30 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {       
-        if ((collision.gameObject.tag == "Part") && (_hasPart == false))
+        if ((collision.gameObject.tag == "Part") && (hasPart == false))
         {
-            _hasPart = true;
-            _lastPart = collision.gameObject;
+            hasPart = true;
+            lastPart = collision.gameObject;
             collision.gameObject.SetActive(false);
         }
         if (collision.gameObject.tag == "Ship")
         {
-            if (_hasPart == true)
+            if (hasPart == true)
             {
                 gameManager.partsCollected++;
-                Destroy(_lastPart);
-                _hasPart = false;
+                Destroy(lastPart);
+                hasPart = false;
                 Debug.Log("Lo deja en la nave");
             }
         }
         if (collision.gameObject.tag == "Traps" || collision.gameObject.tag == "Proyectile")
         {
-            if(_lastPart != null)
+            if(lastPart != null)
             {
-                _lastPart.gameObject.SetActive(true);
+                lastPart.gameObject.SetActive(true);
             }
-            _hasPart = false;
+            hasPart = false;
             gameManager.Restart();
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Moving Platform")
-        {
-            this.transform.parent = collision.transform;
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Moving Platform")
-        {
-            this.transform.parent = null;
         }
     }
 }

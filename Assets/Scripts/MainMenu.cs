@@ -6,19 +6,11 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public Button btnPlay;
-    public Button btnHighScores;
-    public Button btnCredits;
-    public Button btnBackToMainMenu;
-    public Button btnExit;
+
     // Start is called before the first frame update
     void Start()
     {
-        btnPlay.onClick.AddListener(Play);
-        btnHighScores.onClick.AddListener(HighScores);
-        btnCredits.onClick.AddListener(Credits);
-        btnBackToMainMenu.onClick.AddListener(BackToMainMenu);
-        btnExit.onClick.AddListener(BackToMainMenu);
+
     }
 
     // Update is called once per frame
@@ -29,7 +21,7 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
-        SceneManager.LoadScene(10);
+        SceneManager.LoadScene(1);
         Debug.Log("asdf");
     }
 

@@ -7,64 +7,98 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Sprite[] partsSprites;
-    public Text partsCounterUI;
-    public Text winQuoteUI;
-    public Text triesCounterUI;
-    public Text timerUI;
     public GameObject player1;
     public GameObject player2;
     public int partsCollected;
     public int partsQuantity;
     public float triesCounter;
-    public float timer;
+    
 
-
-    GameObject[] _parts;
-    Vector3 _p1Start;
-    Vector3 _p2Start;
+    [SerializeField] private GameObject winMenu;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private Text partsCounterUI;
+    [SerializeField] private Text triesCounterUI;
+    [SerializeField] private Text timerUI;
+    [SerializeField] private Text bestScoreUI;
+    private GameObject[] parts;
+    private Vector3 p1Start;
+    private Vector3 p2Start;
+    private float timer;
 
     private void Awake()
     {
-        _parts = GameObject.FindGameObjectsWithTag("Part");
-        partsQuantity = _parts.Length;
-        partsCollected = 0;
+        parts = GameObject.FindGameObjectsWithTag("Part");
+        partsQuantity = parts.Length;
+        RandomSpriteParts();
     }
 
     void Start()
     {
-        
-        for (int i = 0; i < _parts.Length; i++)
-        {
-            _parts[i].gameObject.GetComponent<SpriteRenderer>().sprite = partsSprites[(Random.Range(0, partsSprites.Length))];
-        }
-        Cursor.lockState = CursorLockMode.Locked;
-        winQuoteUI.enabled = false;
-        _p1Start = player1.transform.position;
-        _p2Start = player2.transform.position;
+        PlayerPrefs.GetFloat("Highscore", 10000);
+        Debug.Log(PlayerPrefs.GetFloat("Highscore"));
+        pauseMenu.gameObject.SetActive(false);
+        winMenu.gameObject.SetActive(false);
+        //Cursor.lockState = CursorLockMode.Locked;
+        p1Start = player1.transform.position;
+        p2Start = player2.transform.position;
         triesCounter = 0;
+        partsCollected = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        partsCounterUI.text = "Parts to repair the ship: " + partsCollected + "/" + partsQuantity;
-        triesCounterUI.text = "Tries: " + triesCounter;
-        if(partsCollected == partsQuantity)
-        {
-            winQuoteUI.enabled = true;
-        }
+        ShowStatus();
+        WinState();
+        DeletePlayerprefs();
+    }
 
-        if(Input.GetKeyDown("r"))
-        {
-             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+    void ShowStatus()
+    {
+        partsCounterUI.text = " Parts : " + partsCollected + "/" + partsQuantity;
+        triesCounterUI.text = " Tries: " + triesCounter;
+        timerUI.text = " Time: " + timer.ToString("f0");
     }
 
     public void Restart()
     {
         triesCounter = triesCounter + 1f;
-        player1.gameObject.transform.position = _p1Start;
-        player2.gameObject.transform.position = _p2Start;
+        player1.gameObject.transform.position = p1Start;
+        player2.gameObject.transform.position = p2Start;
+    }
+
+    void RandomSpriteParts()
+    {
+        for (int i = 0; i < parts.Length; i++)
+        {
+            parts[i].gameObject.GetComponent<SpriteRenderer>().sprite = partsSprites[(Random.Range(0, partsSprites.Length))];
+        }
+    }
+
+    void WinState()
+    {
+        if (partsCollected == partsQuantity)
+        {
+            Debug.Log(timer);
+            if (timer < PlayerPrefs.GetFloat("Highscore"))
+            {
+                 PlayerPrefs.SetFloat("Highscore", timer);
+            }
+            winMenu.gameObject.SetActive(true);
+            bestScoreUI.text = PlayerPrefs.GetFloat("Highscore").ToString();
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+    }
+
+    void DeletePlayerprefs()
+    {
+        if(Input.GetKeyDown("i"))
+        {
+            PlayerPrefs.DeleteAll();
+            Debug.Log("Delet");
+        }
     }
 }
